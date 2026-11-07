@@ -29,6 +29,12 @@ const ACCESS_PASSWORD = process.env.FLUX_ACCESS_PASSWORD || "";
 // Public mode: set FLUX_PUBLIC_OPEN=1 to let anyone on the internet use the site
 // without the shared password. Per-visitor rate limits and queue isolation apply.
 const PUBLIC_OPEN = process.env.FLUX_PUBLIC_OPEN === "1";
+// Local mode is used by the desktop app: the only visitor is the person running Flux
+// on their own machine, so no sign-in is needed for full downloads. It is honoured
+// only when the server listens on the loopback interface.
+const LOCAL_MODE =
+  process.env.FLUX_LOCAL_MODE === "1" &&
+  (process.env.HOST || "127.0.0.1") === "127.0.0.1";
 const MAX_CONCURRENT = Math.max(
   1,
   Number(process.env.FLUX_MAX_CONCURRENT || 2),
@@ -789,8 +795,10 @@ export function createServer() {
       }
       await proxyReady;
       const context = auth.get(req, res),
-        session = context.session,
-        owner = ownerOf(session);
+        session = context.session;
+      if (LOCAL_MODE && !session.user)
+        session.user = { id: "local", name: "You", email: "", picture: null };
+      const owner = ownerOf(session);
       if (route === "/auth/google" && req.method === "GET")
         return await auth.start(context, res);
       if (route === "/auth/google/callback" && req.method === "GET")

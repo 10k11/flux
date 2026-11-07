@@ -13,6 +13,6 @@ Include what you found, steps to reproduce, and the impact you expect. Please al
 
 ## Scope
 
-Of particular interest: authentication/session handling, authorization (cross-owner access to jobs or files), SSRF or egress-proxy bypass, argument or path injection into yt-dlp/FFmpeg, rate-limit bypass, and anything that lets a guest obtain a full-length file.
+Of particular interest: authentication/session handling, authorization (cross-owner access to jobs or files), SSRF or egress-proxy bypass, argument or path injection into the media engine or FFmpeg, rate-limit bypass, and anything that lets a guest obtain a full-length file.
 
-Out of scope: vulnerabilities in yt-dlp, FFmpeg or third-party platforms themselves (report those upstream), and limitations of the single-process architecture that the README already documents.
+Out of scope: vulnerabilities in the media engine, FFmpeg or third-party platforms themselves (report those upstream), and limitations of the single-process architecture that the README already documents.

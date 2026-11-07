@@ -41,8 +41,8 @@ body:
   - type: input
     id: ytdlp
     attributes:
-      label: yt-dlp version
-      description: Visible at /api/health. Many source failures are fixed by updating yt-dlp.
+      label: Media engine version
+      description: Visible at /api/health. Many source failures are fixed by updating the media engine.
   - type: dropdown
     id: runtime
     attributes:

@@ -7,8 +7,10 @@
 **Your media. Your space.**
 
 A fast, private, self-hostable media workspace. Paste a link, pick a format, save it offline.
-Built with plain HTML, CSS and ES modules on the front end, and Node.js, yt-dlp and FFmpeg on the back end.
+Built with plain HTML, CSS and ES modules on the front end, and Node.js and FFmpeg on the back end.
 **No frontend build step. Two runtime dependencies.**
+
+> **Just want to use it?** Download the desktop app for Windows, macOS (Apple Silicon) or Linux from the [latest release](https://github.com/10k11/flux/releases/latest). No setup needed.
 
 > **Want to contribute?** Pick a [good first issue](https://github.com/10k11/flux/labels/good%20first%20issue), say hi in [Discussions](https://github.com/10k11/flux/discussions), and open a PR. Setup takes about a minute: `npm ci && npm run setup && npm run dev`.
 
@@ -23,6 +25,7 @@ Built with plain HTML, CSS and ES modules on the front end, and Node.js, yt-dlp 
 
 [Features](#-features) ·
 [Screenshots](#-screenshots) ·
+[Desktop app](#-desktop-app) ·
 [Quick start](#-quick-start) ·
 [Configuration](#-configuration) ·
 [Architecture](#-architecture) ·
@@ -74,7 +77,7 @@ Paste a link and the whole workspace re-themes to match the platform (surface, t
 
 YouTube · TikTok · Instagram · X / Twitter · SoundCloud · Pinterest · Vimeo · Dailymotion · Twitch · RadioJavan · Reddit · Facebook · Bilibili · Archive.org · Wikimedia
 
-> These are *conditional source families* powered by yt-dlp extractors, not individually guaranteed integrations. Platforms change often. Operators can add reviewed hosts with `FLUX_EXTRA_SOURCE_HOSTS`.
+> These are *conditional source families* powered by the media engine's extractors, not individually guaranteed integrations. Platforms change often. Operators can add reviewed hosts with `FLUX_EXTRA_SOURCE_HOSTS`.
 
 ### Craft and accessibility
 
@@ -106,15 +109,31 @@ YouTube · TikTok · Instagram · X / Twitter · SoundCloud · Pinterest · Vime
 
 ---
 
+## 🖥 Desktop app
+
+Don't want to run a server? Flux also ships as a desktop app:
+
+| System | Download |
+| --- | --- |
+| Windows | `Flux-Setup-*.exe` |
+| macOS (Apple Silicon) | `Flux-*.dmg` |
+| Linux | `Flux-*.AppImage` |
+
+Get them from the [latest release](https://github.com/10k11/flux/releases/latest), open the app, paste a link and save. Full-length downloads work without Google sign-in, and the first launch needs an internet connection to fetch its media engine.
+
+The builds are unsigned, so Windows SmartScreen (**More info**, then **Run anyway**) and macOS Gatekeeper (right-click the app, then **Open**) show a warning the first time. Developer notes are in [`desktop/`](desktop/README.md).
+
+---
+
 ## 🚀 Quick start
 
-**Requirements:** Node.js **22.9+** (24 LTS recommended). `npm run setup` downloads yt-dlp for you (checksum-verified) and, on Windows x64, FFmpeg/FFprobe too. On macOS/Linux install FFmpeg with your package manager (`brew install ffmpeg`, `apt install ffmpeg`).
+**Requirements:** Node.js **22.9+** (24 LTS recommended). `npm run setup` downloads the media engine for you (checksum-verified) and, on Windows x64, FFmpeg/FFprobe too. On macOS/Linux install FFmpeg with your package manager (`brew install ffmpeg`, `apt install ffmpeg`).
 
 ```sh
 git clone https://github.com/10k11/flux.git
 cd flux
 npm ci
-npm run setup     # fetches yt-dlp (and FFmpeg on Windows) into ./bin
+npm run setup     # fetches the media engine (and FFmpeg on Windows) into ./bin
 npm start
 ```
 
@@ -194,7 +213,7 @@ flowchart LR
     S --> A["lib/auth.mjs<br/>Google OAuth, sessions"]
     S --> P["lib/platforms.mjs<br/>source allowlist"]
     S --> M["lib/media.mjs<br/>format selection, validation"]
-    S -->|spawn| Y["yt-dlp"]
+    S -->|spawn| Y["media engine"]
     Y -->|"all HTTP(S)"| E["lib/egress.mjs<br/>loopback egress proxy<br/>DNS pin, public IPs only"]
     E --> I(("Internet"))
     S -->|spawn| F["FFmpeg / FFprobe<br/>preview + validation"]
@@ -213,7 +232,7 @@ flux/
 ├── lib/
 │   ├── auth.mjs          Google OAuth (PKCE, state, nonce), sessions, CSRF
 │   ├── egress.mjs        SSRF-safe loopback proxy for extractor traffic
-│   ├── media.mjs         yt-dlp argument builder, format rules, validation
+│   ├── media.mjs         engine argument builder, format rules, validation
 │   └── platforms.mjs     Supported source families
 ├── public/               Static front end (no bundler)
 │   ├── index.html · styles.css · app.js · api.js · components.js · icons.js
@@ -245,7 +264,7 @@ All `POST` endpoints require the session's `X-Flux-Token` CSRF header.
 | `POST /api/jobs/:id/cancel` · `/retry` | Cancel an active job / regenerate a failed or expired one |
 | `GET /api/jobs/:id/files/:index` | Private, cookie-authenticated file stream (range-enabled) |
 | `POST /api/jobs/clear` | Remove the owner's finished records and files |
-| `GET /api/health` | Actual yt-dlp / FFmpeg availability |
+| `GET /api/health` | Actual media engine / FFmpeg availability |
 | `GET /api/platforms` | Source-family directory |
 
 `options`: `format` (`mp4`/`mp3`), `quality` (best or a resolution cap), `bitrate` (128/192/256/320), `subtitles`, `language`.
@@ -284,7 +303,7 @@ docker compose up -d --build
 4. The **PO-token provider** (`flux-pot`) stays on the internal Docker network. **Never publish its port.**
 5. The Flux container includes a Docker healthcheck for `/api/health`; use `docker compose ps` to verify that it becomes `healthy` after startup.
 
-> **Operator notes.** YouTube may still block datacentre IPs or require extra checks, and a token provider is no guarantee. Keep yt-dlp and FFmpeg updated (rebuild the image regularly), apply container filesystem quotas, and add outbound firewall rules as defence in depth. The optional cookies file is sensitive and must never be served. The shared Basic-auth password is only an outer gate and does **not** grant full-download privileges.
+> **Operator notes.** YouTube may still block datacentre IPs or require extra checks, and a token provider is no guarantee. Keep the media engine and FFmpeg updated (rebuild the image regularly), apply container filesystem quotas, and add outbound firewall rules as defence in depth. The optional cookies file is sensitive and must never be served. The shared Basic-auth password is only an outer gate and does **not** grant full-download privileges.
 
 ---
 
@@ -333,7 +352,7 @@ Flux is a tool. **You are responsible for how you use it.** Only save media you 
 
 ## 🙏 Acknowledgements
 
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) · [FFmpeg](https://ffmpeg.org) · [bgutil-ytdlp-pot-provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider) · [Caddy](https://caddyserver.com) · [Playwright](https://playwright.dev) · [axe-core](https://github.com/dequelabs/axe-core). Platform marks come from [Simple Icons](https://simpleicons.org) (CC0); the RadioJavan mark is from its official site. Trademarks belong to their respective owners.
+[FFmpeg](https://ffmpeg.org) · [PO token provider](https://github.com/Brainicism/bgutil-ytdlp-pot-provider) · [Caddy](https://caddyserver.com) · [Playwright](https://playwright.dev) · [axe-core](https://github.com/dequelabs/axe-core). Platform marks come from [Simple Icons](https://simpleicons.org) (CC0); the RadioJavan mark is from its official site. Trademarks belong to their respective owners.
 
 ## 📄 License
 

@@ -7,7 +7,7 @@ Thanks for helping! Flux is intentionally small: plain JavaScript, no frontend b
 ```sh
 git clone https://github.com/<you>/flux.git && cd flux
 npm ci
-npm run setup      # yt-dlp (+ FFmpeg on Windows)
+npm run setup      # media engine (+ FFmpeg on Windows)
 npm run dev        # http://localhost:3000, restarts on change
 ```
 

@@ -4,13 +4,13 @@ Welcome, agent. **AI-assisted contributions are explicitly welcome in this repos
 
 ## What Flux is
 
-A self-hostable media workspace: paste a link, pick MP4/MP3, save offline. Node.js (>=22.9) back end that drives **yt-dlp** and **FFmpeg**; plain HTML/CSS/ES-module front end with **no build step**. Only two runtime dependencies (`google-auth-library`, `ipaddr.js`). Keep it that way.
+A self-hostable media workspace: paste a link, pick MP4/MP3, save offline. Node.js (>=22.9) back end that drives its media engine and **FFmpeg**; plain HTML/CSS/ES-module front end with **no build step**. Only two runtime dependencies (`google-auth-library`, `ipaddr.js`). Keep it that way.
 
 ## Commands
 
 ```sh
 npm ci                 # install
-npm run setup          # fetch yt-dlp (+ FFmpeg on Windows)
+npm run setup          # fetch the media engine (+ FFmpeg on Windows)
 npm run dev            # http://localhost:3000, auto-restart
 npm run check          # parse every module
 npm test               # node:test unit/integration (needs ffmpeg on PATH or in ./bin)
@@ -27,8 +27,8 @@ npm run test:a11y      # axe-core WCAG A/AA (server must be running)
 | --- | --- |
 | `server.mjs` | HTTP routing, job queue/worker, rate limits, file delivery (range-enabled) |
 | `lib/auth.mjs` | Google OAuth (state, PKCE, nonce), hashed sessions, CSRF |
-| `lib/egress.mjs` | Loopback proxy for yt-dlp traffic: DNS pinning, public IPs only (SSRF defence) |
-| `lib/media.mjs` | yt-dlp argument builder, format/quality rules, validation |
+| `lib/egress.mjs` | Loopback proxy for media-engine traffic: DNS pinning, public IPs only (SSRF defence) |
+| `lib/media.mjs` | Engine argument builder, format/quality rules, validation |
 | `lib/platforms.mjs` | Supported source families |
 | `public/` | Static front end: `index.html`, `styles.css`, `app.js`, `api.js`, `components.js`, `icons.js` |
 | `test/` | `*.test.mjs` = `node:test`; `browser.mjs` and `accessibility.mjs` = Playwright |

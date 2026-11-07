@@ -1,6 +1,6 @@
 # Flux
 
-> Flux is an open-source (MIT), self-hostable media workspace: paste a link, choose MP4 or MP3, and save it offline. Node.js + yt-dlp + FFmpeg back end, plain ES-module front end with no build step and only two runtime dependencies. AI-assisted contributions are welcome.
+> Flux is an open-source (MIT), self-hostable media workspace: paste a link, choose MP4 or MP3, and save it offline. Node.js + FFmpeg back end (plus desktop apps for Windows, macOS and Linux), plain ES-module front end with no build step and only two runtime dependencies. AI-assisted contributions are welcome.
 
 Flux supports 15 source families (YouTube, TikTok, Instagram, X, SoundCloud, Vimeo, Twitch, Reddit and more), genuine FFmpeg-validated 50% guest previews, Google sign-in (server-side OAuth with PKCE) for full downloads, an SSRF-safe egress proxy, owner-scoped job queue and history, and WCAG-checked responsive UI.
 
@@ -22,5 +22,5 @@ Flux supports 15 source families (YouTube, TikTok, Instagram, X, SoundCloud, Vim
 - [server.mjs](https://github.com/10k11/flux/blob/main/server.mjs): routing, job queue, rate limits, file delivery
 - [lib/auth.mjs](https://github.com/10k11/flux/blob/main/lib/auth.mjs): OAuth, sessions, CSRF
 - [lib/egress.mjs](https://github.com/10k11/flux/blob/main/lib/egress.mjs): SSRF-safe proxy
-- [lib/media.mjs](https://github.com/10k11/flux/blob/main/lib/media.mjs): yt-dlp arguments and validation
+- [lib/media.mjs](https://github.com/10k11/flux/blob/main/lib/media.mjs): engine arguments and validation
 - [public/](https://github.com/10k11/flux/tree/main/public): front end
