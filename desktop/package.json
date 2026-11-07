@@ -1,7 +1,7 @@
 {
   "name": "flux-desktop",
   "productName": "Flux",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Flux desktop app: the Flux media workspace in a window, no setup needed.",
   "license": "MIT",
   "author": "Lokii (https://lokii.dev)",

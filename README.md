@@ -123,6 +123,19 @@ Get them from the [latest release](https://github.com/10k11/flux/releases/latest
 
 The builds are unsigned, so Windows SmartScreen (**More info**, then **Run anyway**) and macOS Gatekeeper (right-click the app, then **Open**) show a warning the first time. Developer notes are in [`desktop/`](desktop/README.md).
 
+<details>
+<summary><b>Desktop app troubleshooting</b></summary>
+
+- **Windows says "Windows protected your PC":** click **More info**, then **Run anyway**.
+- **macOS says the app can't be opened:** right-click (or Control-click) the app, choose **Open**, then confirm. If it still refuses, go to **System Settings, Privacy & Security** and click **Open Anyway**.
+- **The macOS download only supports Apple Silicon (M1 or newer).** Intel Macs can run Flux from source (see Quick start).
+- **Linux:** make the AppImage executable first: `chmod +x Flux-*.AppImage`.
+- **"Flux could not start":** the first launch needs internet to fetch its media engine. Connect and try again.
+- **Downloads that used to work now fail:** sites change often. The app updates its media engine each time it starts, so restart it. If it still fails, [open an issue](https://github.com/10k11/flux/issues/new/choose) and pick **Desktop app problem**.
+- **Where your data lives:** Windows `%APPDATA%Flux`, macOS `~/Library/Application Support/Flux`, Linux `~/.config/Flux`. Deleting that folder resets the app.
+
+</details>
+
 ---
 
 ## 🚀 Quick start

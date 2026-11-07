@@ -1,0 +1,65 @@
+name: Desktop app problem
+description: The Flux desktop app (Windows, macOS, Linux) won't install, open or download
+labels: ["desktop", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Security issues must not be filed here.** See SECURITY.md.
+        Please don't paste cookies, tokens or private links.
+        Windows SmartScreen or macOS Gatekeeper warnings on first open are expected (the builds are unsigned). See the README's Desktop app section for the steps.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: os_version
+    attributes:
+      label: OS version
+      placeholder: e.g. Windows 11 23H2, macOS 15, Ubuntu 24.04
+  - type: input
+    id: app_version
+    attributes:
+      label: Flux app version
+      description: The version in the installer's file name or the release you downloaded.
+      placeholder: e.g. 1.1.1
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where does it go wrong?
+      options:
+        - Installing
+        - Opening the app / first launch
+        - Looking up a link
+        - Downloading or converting
+        - Saving the file
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect instead? Include any error message you see.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source platform
+      description: e.g. YouTube, SoundCloud (no private URLs please)
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots / details
+      render: shell
