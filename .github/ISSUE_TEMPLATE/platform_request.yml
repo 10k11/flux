@@ -21,5 +21,5 @@ body:
   - type: textarea
     id: notes
     attributes:
-      label: Does yt-dlp support it?
-      description: Link to the yt-dlp extractor / supported-sites entry and an example public URL. DRM-protected services will be declined.
+      label: Is it supported by the media engine?
+      description: Link to the extractor / supported-sites entry and an example public URL. DRM-protected services will be declined.

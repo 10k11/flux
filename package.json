@@ -1,7 +1,7 @@
 {
   "name": "flux-media",
   "version": "1.0.0",
-  "description": "Flux: a fast, private, self-hostable media workspace built on yt-dlp and FFmpeg. No frontend build step.",
+  "description": "Flux: a fast, private, self-hostable media workspace built on FFmpeg. No frontend build step.",
   "license": "MIT",
   "author": "Lokii (https://lokii.dev)",
   "homepage": "https://github.com/10k11/flux#readme",
@@ -13,7 +13,6 @@
     "url": "https://github.com/10k11/flux/issues"
   },
   "keywords": [
-    "yt-dlp",
     "ffmpeg",
     "media",
     "downloader",
