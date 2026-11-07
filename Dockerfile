@@ -1,4 +1,4 @@
-FROM node:24-bookworm-slim
+FROM node:25-bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg python3 python3-venv ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN python3 -m venv /opt/media && /opt/media/bin/pip install --no-cache-dir 'yt-dlp[default]' 'bgutil-ytdlp-pot-provider==2.0.2'
 WORKDIR /app
