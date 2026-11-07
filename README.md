@@ -30,7 +30,9 @@ Built with plain HTML, CSS and ES modules on the front end, and Node.js, yt-dlp 
 [Deploy](#-deployment) ·
 [Contributing](#-contributing)
 
-<img src="docs/screenshots/home.png" alt="Flux workspace home screen" width="900" />
+<a href="docs/demo/flux-demo.mp4"><img src="docs/demo/flux-demo.gif" alt="Flux product demo: paste a link, pick a format, watch the live queue, and see the workspace re-theme to the source" width="900" /></a>
+
+<sub>47-second product demo. <a href="docs/demo/flux-demo.mp4">Watch the full-quality MP4</a>.</sub>
 
 </div>
 
