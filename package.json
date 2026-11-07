@@ -37,7 +37,7 @@
     "node": ">=22"
   },
   "dependencies": {
-    "google-auth-library": "11.2.0",
+    "google-auth-library": "11.3.3",
     "ipaddr.js": "2.5.0"
   },
   "devDependencies": {
