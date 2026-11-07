@@ -130,9 +130,7 @@ test("FLUX_EXTRA_SOURCE_HOSTS adds allowed hosts", async () => {
       validateExtra("https://extra.example.test/"),
       "https://extra.example.test/",
     );
-    assert.throws(() =>
-      validateExtra("https://extra.example.test.evil.test/"),
-    );
+    assert.throws(() => validateExtra("https://extra.example.test.evil.test/"));
   } finally {
     if (original === undefined) {
       delete process.env.FLUX_EXTRA_SOURCE_HOSTS;
