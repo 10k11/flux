@@ -1,0 +1,60 @@
+name: Bug report
+description: Something isn't working as expected
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Security issues must not be filed here.** See SECURITY.md.
+        Please don't paste cookies, tokens or private links.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Paste ...\n2. Click ...\n3. See ..."
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source platform
+      description: e.g. YouTube, SoundCloud (no private URLs please)
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Guest preview
+        - Signed-in full download
+        - Not sure
+  - type: input
+    id: version
+    attributes:
+      label: Flux version / commit
+  - type: input
+    id: ytdlp
+    attributes:
+      label: yt-dlp version
+      description: Visible at /api/health. Many source failures are fixed by updating yt-dlp.
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: How are you running Flux?
+      options:
+        - Docker Compose
+        - npm start (Windows)
+        - npm start (macOS)
+        - npm start (Linux)
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      render: shell

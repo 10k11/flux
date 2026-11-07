@@ -1,0 +1,49 @@
+{
+  "name": "flux-media",
+  "version": "1.0.0",
+  "description": "Flux: a fast, private, self-hostable media workspace built on yt-dlp and FFmpeg. No frontend build step.",
+  "license": "MIT",
+  "author": "Lokii (https://lokii.dev)",
+  "homepage": "https://github.com/10k11/flux#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10k11/flux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/10k11/flux/issues"
+  },
+  "keywords": [
+    "yt-dlp",
+    "ffmpeg",
+    "media",
+    "downloader",
+    "self-hosted",
+    "nodejs",
+    "oauth"
+  ],
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.mjs",
+    "dev": "node --env-file-if-exists=.env --watch server.mjs",
+    "setup": "node scripts/setup.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "test:browser": "node test/browser.mjs",
+    "test:a11y": "node test/accessibility.mjs",
+    "format:check": "prettier --check public lib server.mjs test scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "google-auth-library": "11.2.0",
+    "ipaddr.js": "2.5.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "playwright": "1.64.0",
+    "prettier": "3.9.9",
+    "simple-icons": "16.34.0"
+  }
+}

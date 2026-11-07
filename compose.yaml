@@ -1,0 +1,63 @@
+services:
+  flux:
+    build: .
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      FLUX_PUBLIC_HOST: ${FLUX_PUBLIC_HOST:?Set the public domain in .env}
+      FLUX_ACCESS_USERNAME: ${FLUX_ACCESS_USERNAME:-flux}
+      # Private mode: set a password below. Public mode: leave it empty and set FLUX_PUBLIC_OPEN=1.
+      FLUX_ACCESS_PASSWORD: ${FLUX_ACCESS_PASSWORD:-}
+      FLUX_PUBLIC_OPEN: ${FLUX_PUBLIC_OPEN:-0}
+      FLUX_MAX_CONCURRENT: ${FLUX_MAX_CONCURRENT:-2}
+      FLUX_MAX_FILESIZE: ${FLUX_MAX_FILESIZE:-4G}
+      FLUX_RETENTION_HOURS: ${FLUX_RETENTION_HOURS:-24}
+      FLUX_INSPECT_PER_10MIN: ${FLUX_INSPECT_PER_10MIN:-40}
+      FLUX_JOBS_PER_HOUR: ${FLUX_JOBS_PER_HOUR:-15}
+      FLUX_ACTIVE_PER_VISITOR: ${FLUX_ACTIVE_PER_VISITOR:-6}
+      FLUX_ORIGIN: https://${FLUX_PUBLIC_HOST}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      FLUX_MAX_DURATION: ${FLUX_MAX_DURATION:-7200}
+      FLUX_MAX_JOB_BYTES: ${FLUX_MAX_JOB_BYTES:-4294967296}
+      FLUX_TRUST_PROXY: 1
+      FLUX_EXTRA_SOURCE_HOSTS: ${FLUX_EXTRA_SOURCE_HOSTS:-}
+      FLUX_DATA_DIR: /app/data
+      FLUX_PO_TOKEN_URL: http://flux-pot:4416
+      YTDLP_PATH: /opt/media/bin/yt-dlp
+      FFMPEG_PATH: /usr/bin/ffmpeg
+    volumes:
+      - flux-data:/app/data
+    depends_on:
+      - flux-pot
+    expose:
+      - "3000"
+
+  flux-pot:
+    image: brainicism/bgutil-ytdlp-pot-provider:latest
+    restart: unless-stopped
+    expose:
+      - "4416"
+    # Never publish this unauthenticated token service to the internet.
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      FLUX_PUBLIC_HOST: ${FLUX_PUBLIC_HOST:?Set the public domain in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - flux
+
+volumes:
+  flux-data:
+  caddy-data:
+  caddy-config:
