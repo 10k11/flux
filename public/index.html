@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flux — Your media. Your space.</title>
+    <meta
+      name="description"
+      content="Find and save supported video and audio for offline access. Your media. Your space."
+    />
+    <meta name="theme-color" content="#F7F7F5" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;750&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to workspace</a>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" aria-label="Flux home"
+        ><img
+          class="brand-symbol"
+          src="/favicon.svg"
+          alt=""
+          width="40"
+          height="40"
+        /><span
+          ><strong>flux<span class="brand-dot">.</span></strong></span
+        ></a
+      >
+      <div class="nav-caption">Workspace</div>
+      <nav aria-label="Main navigation" class="main-nav">
+        <button
+          class="nav-item active"
+          data-view="studio"
+          title="New download"
+          aria-current="page"
+        >
+          <span data-icon="plus"></span><span>New download</span>
+        </button>
+        <button class="nav-item" data-view="queue" title="My downloads">
+          <span data-icon="layers"></span><span>My downloads</span
+          ><b id="nav-count" hidden>0</b>
+        </button>
+        <button class="nav-item" data-view="history" title="History">
+          <span data-icon="clock"></span><span>History</span>
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="sidebar-account" id="sidebar-account">
+          <span class="avatar" data-icon="user"></span>
+          <span
+            ><strong id="sidebar-name">Guest workspace</strong
+            ><small id="sidebar-account-note"
+              >Sign in for fast & full downloads</small
+            ></span
+          >
+          <span data-icon="chevron"></span>
+        </button>
+      </div>
+    </aside>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            class="icon-button mobile-menu"
+            id="menu-toggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="sidebar"
+          >
+            <span data-icon="menu"></span>
+          </button>
+          <a class="mobile-brand" href="/" aria-label="Flux home"
+            ><img src="/favicon.svg" width="28" height="28" alt="" /><strong
+              >flux.</strong
+            ></a
+          >
+          <div class="breadcrumb">
+            <span>Workspace</span><span class="slash">/</span
+            ><strong id="page-label">New download</strong>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <span class="shortcut"><kbd>/</kbd> Quick access</span>
+          <div class="account-wrap">
+            <button id="account-button" class="button google-button">
+              <span class="google-icon"></span
+              ><span id="account-label">Sign in with Google</span>
+            </button>
+            <div id="account-menu" class="account-menu" hidden>
+              <strong id="account-name"></strong><span id="account-email"></span
+              ><button data-view="queue">My downloads</button
+              ><button id="sign-out">Sign out</button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="page-content" id="main" tabindex="-1">
+        <div
+          id="connection-message"
+          class="notice error"
+          role="status"
+          hidden
+        ></div>
+        <section id="view-studio" class="view">
+          <div class="studio-hero">
+            <div class="page-heading">
+              <div class="eyebrow">FLUX WORKSPACE</div>
+              <h1>
+                Your media,<br class="mobile-break" />
+                <span>on your terms.</span>
+              </h1>
+              <p>
+                Save a video. Take your music with you. Make room for offline.
+              </p>
+            </div>
+            <div
+              class="floating-apps-hero"
+              aria-label="Supported media platforms"
+            >
+              <button
+                type="button"
+                class="floating-app float-youtube"
+                data-platform="youtube"
+                data-name="YouTube"
+                title="Save from YouTube"
+                aria-label="Save from YouTube"
+              >
+                <span class="floating-app-icon yt-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">YouTube</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-tiktok"
+                data-platform="tiktok"
+                data-name="TikTok"
+                title="Save from TikTok"
+                aria-label="Save from TikTok"
+              >
+                <span class="floating-app-icon tt-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">TikTok</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-instagram"
+                data-platform="instagram"
+                data-name="Instagram"
+                title="Save from Instagram"
+                aria-label="Save from Instagram"
+              >
+                <span class="floating-app-icon ig-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">Instagram</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-soundcloud"
+                data-platform="soundcloud"
+                data-name="SoundCloud"
+                title="Save from SoundCloud"
+                aria-label="Save from SoundCloud"
+              >
+                <span class="floating-app-icon sc-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M23.999 14.165c-.052 1.796-1.612 3.169-3.4 3.169h-8.18a.68.68 0 0 1-.675-.683V7.862a.747.747 0 0 1 .452-.724s.75-.513 2.333-.513a5.364 5.364 0 0 1 2.763.755 5.433 5.433 0 0 1 2.57 3.54c.282-.08.574-.121.868-.12.884 0 1.73.358 2.347.992s.948 1.49.922 2.373ZM10.721 8.421c.247 2.98.427 5.697 0 8.672a.264.264 0 0 1-.53 0c-.395-2.946-.22-5.718 0-8.672a.264.264 0 0 1 .53 0ZM9.072 9.448c.285 2.659.37 4.986-.006 7.655a.277.277 0 0 1-.55 0c-.331-2.63-.256-5.02 0-7.655a.277.277 0 0 1 .556 0Zm-1.663-.257c.27 2.726.39 5.171 0 7.904a.266.266 0 0 1-.532 0c-.38-2.69-.257-5.21 0-7.904a.266.266 0 0 1 .532 0Zm-1.647.77a26.108 26.108 0 0 1-.008 7.147.272.272 0 0 1-.542 0 27.955 27.955 0 0 1 0-7.147.275.275 0 0 1 .55 0Zm-1.67 1.769c.421 1.865.228 3.5-.029 5.388a.257.257 0 0 1-.514 0c-.21-1.858-.398-3.549 0-5.389a.272.272 0 0 1 .543 0Zm-1.655-.273c.388 1.897.26 3.508-.01 5.412-.026.28-.514.283-.54 0-.244-1.878-.347-3.54-.01-5.412a.283.283 0 0 1 .56 0Zm-1.668.911c.4 1.268.257 2.292-.026 3.572a.257.257 0 0 1-.514 0c-.241-1.262-.354-2.312-.023-3.572a.283.283 0 0 1 .563 0Z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">SoundCloud</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-twitch"
+                data-platform="twitch"
+                data-name="Twitch"
+                title="Save from Twitch"
+                aria-label="Save from Twitch"
+              >
+                <span class="floating-app-icon tw-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">Twitch</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-x"
+                data-platform="x"
+                data-name="X"
+                title="Save from X / Twitter"
+                aria-label="Save from X"
+              >
+                <span class="floating-app-icon x-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">X</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-reddit"
+                data-platform="reddit"
+                data-name="Reddit"
+                title="Save from Reddit"
+                aria-label="Save from Reddit"
+              >
+                <span class="floating-app-icon rd-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M12 0C5.373 0 0 5.373 0 12c0 3.314 1.343 6.314 3.515 8.485l-2.286 2.286C.775 23.225 1.097 24 1.738 24H12c6.627 0 12-5.373 12-12S18.627 0 12 0Zm4.388 3.199c1.104 0 1.999.895 1.999 1.999 0 1.105-.895 2-1.999 2-.946 0-1.739-.657-1.947-1.539v.002c-1.147.162-2.032 1.15-2.032 2.341v.007c1.776.067 3.4.567 4.686 1.363.473-.363 1.064-.58 1.707-.58 1.547 0 2.802 1.254 2.802 2.802 0 1.117-.655 2.081-1.601 2.531-.088 3.256-3.637 5.876-7.997 5.876-4.361 0-7.905-2.617-7.998-5.87-.954-.447-1.614-1.415-1.614-2.538 0-1.548 1.255-2.802 2.803-2.802.645 0 1.239.218 1.712.585 1.275-.79 2.881-1.291 4.64-1.365v-.01c0-1.663 1.263-3.034 2.88-3.207.188-.911.993-1.595 1.959-1.595Zm-8.085 8.376c-.784 0-1.459.78-1.506 1.797-.047 1.016.64 1.429 1.426 1.429.786 0 1.371-.369 1.418-1.385.047-1.017-.553-1.841-1.338-1.841Zm7.406 0c-.786 0-1.385.824-1.338 1.841.047 1.017.634 1.385 1.418 1.385.785 0 1.473-.413 1.426-1.429-.046-1.017-.721-1.797-1.506-1.797Zm-3.703 4.013c-.974 0-1.907.048-2.77.135-.147.015-.241.168-.183.305.483 1.154 1.622 1.964 2.953 1.964 1.33 0 2.47-.81 2.953-1.964.057-.137-.037-.29-.184-.305-.863-.087-1.795-.135-2.769-.135Z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">Reddit</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+              <button
+                type="button"
+                class="floating-app float-pinterest"
+                data-platform="pinterest"
+                data-name="Pinterest"
+                title="Save from Pinterest"
+                aria-label="Save from Pinterest"
+              >
+                <span class="floating-app-icon pin-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"
+                    />
+                  </svg>
+                </span>
+                <span class="floating-app-label">Pinterest</span>
+                <span class="floating-app-sparkle"></span>
+              </button>
+            </div>
+          </div>
+          <section class="download-panel" aria-label="New download">
+            <div class="panel-heading">
+              <div class="panel-tabs" role="tablist" aria-label="Source type">
+                <button
+                  role="tab"
+                  id="tab-single"
+                  aria-controls="source-panel"
+                  aria-selected="true"
+                  tabindex="0"
+                  data-mode="single"
+                  class="active"
+                >
+                  <span data-icon="link"></span>Paste a link</button
+                ><button
+                  role="tab"
+                  id="tab-batch"
+                  aria-controls="source-panel"
+                  aria-selected="false"
+                  tabindex="-1"
+                  data-mode="batch"
+                >
+                  <span data-icon="layers"></span>Batch</button
+                ><button
+                  role="tab"
+                  id="tab-search"
+                  aria-controls="source-panel"
+                  aria-selected="false"
+                  tabindex="-1"
+                  data-mode="search"
+                >
+                  <span data-icon="search"></span>Search
+                </button>
+              </div>
+              <span class="panel-step">01 <span>/ Source</span></span>
+            </div>
+            <div id="source-panel" role="tabpanel" aria-labelledby="tab-single">
+              <form id="inspect-form" class="source-form">
+                <label id="input-label" for="media-url"
+                  >What would you like to save?</label
+                >
+                <div class="url-control">
+                  <span data-icon="link" class="input-icon"></span
+                  ><textarea
+                    id="media-url"
+                    rows="1"
+                    placeholder="Paste a video or music link…"
+                    required
+                    spellcheck="false"
+                    aria-describedby="source-help source-message"
+                  ></textarea
+                  ><button
+                    type="button"
+                    class="icon-button"
+                    id="clear-input"
+                    aria-label="Clear source"
+                    hidden
+                  >
+                    <span data-icon="x"></span></button
+                  ><button
+                    type="button"
+                    class="button paste-button"
+                    id="paste-button"
+                  >
+                    <span data-icon="clipboard"></span>Paste
+                  </button>
+                </div>
+                <div class="source-bottom">
+                  <span id="source-help"
+                    >A public video, track, or playlist link.</span
+                  ><button
+                    type="submit"
+                    class="button primary"
+                    id="inspect-button"
+                  >
+                    Find media<span data-icon="arrow"></span>
+                  </button>
+                </div>
+                <div
+                  id="source-message"
+                  class="notice"
+                  role="status"
+                  hidden
+                ></div>
+                <div
+                  id="lookup-skeleton"
+                  class="lookup-skeleton"
+                  aria-hidden="true"
+                  hidden
+                >
+                  <span></span>
+                  <div><i></i><i></i></div>
+                </div>
+              </form>
+              <div class="source-options">
+                <label class="check-label" id="playlist-label"
+                  ><input type="checkbox" id="playlist-toggle" />Include
+                  playlist</label
+                ><span>Discover first. Choose your format next.</span>
+              </div>
+            </div>
+            <div id="results" class="results" hidden></div>
+            <section
+              id="preferences"
+              class="preferences"
+              aria-label="Download preferences"
+              hidden
+            >
+              <div class="preferences-heading">
+                <h2>Make it yours</h2>
+                <span class="panel-step">02 <span>/ Format</span></span>
+              </div>
+              <div class="format-columns">
+                <fieldset>
+                  <legend>Save as</legend>
+                  <div class="format-toggle">
+                    <button
+                      type="button"
+                      data-format="mp4"
+                      class="format-button active"
+                      aria-pressed="true"
+                    >
+                      <span data-icon="video"></span
+                      ><span><strong>Video</strong><small>MP4</small></span
+                      ><i></i></button
+                    ><button
+                      type="button"
+                      data-format="mp3"
+                      class="format-button"
+                      aria-pressed="false"
+                    >
+                      <span data-icon="music"></span
+                      ><span><strong>Audio</strong><small>MP3</small></span
+                      ><i></i>
+                    </button>
+                  </div>
+                </fieldset>
+                <div>
+                  <label for="quality" id="quality-label">Video quality</label
+                  ><select id="quality">
+                    <option value="best">Best available</option>
+                  </select>
+                  <p class="field-hint" id="quality-hint">
+                    Uses the best source available.
+                  </p>
+                </div>
+              </div>
+              <details class="advanced">
+                <summary>
+                  <span data-icon="sliders"></span>More options<span
+                    data-icon="chevron"
+                  ></span>
+                </summary>
+                <div class="advanced-body">
+                  <label class="check-label"
+                    ><input type="checkbox" id="subtitles" />Embed available
+                    subtitles in MP4</label
+                  ><label class="language-label"
+                    >Subtitle language<input
+                      id="language"
+                      value="en"
+                      maxlength="15"
+                      aria-label="Subtitle language code"
+                  /></label>
+                  <p class="field-hint">
+                    Metadata is included automatically. Subtitles depend on the
+                    source.
+                  </p>
+                </div>
+              </details>
+              <div class="preview-note" id="preview-note">
+                <span data-icon="scissors"></span>
+                <div>
+                  <strong
+                    >Guest preview (50% runtime) · Slower processing</strong
+                  >
+                  <p>
+                    Guest previews take longer to re-encode on the server. Sign
+                    in with Google for instant, high-speed & full-length
+                    downloads.
+                  </p>
+                </div>
+              </div>
+              <label class="check-label permission-label"
+                ><input type="checkbox" id="permission" />I own this media or
+                have permission to save it.</label
+              >
+              <div class="download-actions">
+                <button class="button secondary" id="full-download">
+                  <span data-icon="bolt"></span>High-speed & full download<span
+                    data-icon="arrow"
+                  ></span></button
+                ><button class="button primary" id="download-button" disabled>
+                  <span data-icon="download"></span
+                  ><span id="download-label">Download preview</span>
+                </button>
+              </div>
+            </section>
+          </section>
+          <section class="inline-platforms" aria-labelledby="platform-heading">
+            <div class="platforms-label">
+              <h2 id="platform-heading">Your favorites. All in one place.</h2>
+              <span>Supported sources</span>
+            </div>
+            <div id="supported-grid" class="platform-logos"></div>
+            <details class="platform-details">
+              <summary>
+                About supported links <span data-icon="chevron"></span>
+              </summary>
+              <p>
+                Support depends on the URL and installed yt-dlp version.
+                Private, protected, live, or unavailable media may not work.
+                Spotify links search for a YouTube match; Flux does not download
+                Spotify audio. Other source hosts can be enabled by the server
+                operator after review.
+              </p>
+            </details>
+          </section>
+          <section class="recent-section">
+            <div class="section-heading">
+              <div>
+                <h2>Recently saved</h2>
+                <p>Your next offline moment starts here.</p>
+              </div>
+              <button class="text-button" id="view-all">
+                View library<span data-icon="arrow"></span>
+              </button>
+            </div>
+            <div id="recent-jobs"></div>
+          </section>
+          <div class="workspace-footnote">
+            <span data-icon="headphones"></span
+            ><span
+              >For the flight. The road trip. The no-signal kind of day.</span
+            >
+          </div>
+        </section>
+        <section id="view-queue" class="view" hidden>
+          <div class="page-heading">
+            <div class="eyebrow">YOUR OFFLINE SPACE</div>
+            <h1>My downloads<span class="accent">.</span></h1>
+            <p>From a good find to a file of your own.</p>
+          </div>
+          <div class="library-toolbar">
+            <div class="filters" aria-label="Filter downloads">
+              <button data-filter="all" class="active" aria-pressed="true">
+                All files</button
+              ><button data-filter="active" aria-pressed="false">
+                In progress</button
+              ><button data-filter="completed" aria-pressed="false">
+                Ready</button
+              ><button data-filter="failed" aria-pressed="false">
+                Needs attention
+              </button>
+            </div>
+            <button class="button secondary" data-view="studio">
+              <span data-icon="plus"></span>New download
+            </button>
+          </div>
+          <p class="retention-note">
+            Files are kept for <span class="retention-hours">24</span> hours.
+            Save them to your device to keep them.
+          </p>
+          <div id="all-jobs" class="library-list"></div>
+        </section>
+        <section id="view-history" class="view" hidden>
+          <div class="page-heading">
+            <div class="eyebrow">YOUR ACTIVITY</div>
+            <h1>A little history<span class="accent">.</span></h1>
+            <p>Your finished downloads, including files that have expired.</p>
+          </div>
+          <div class="section-heading">
+            <h2>Download history</h2>
+            <button class="text-button" id="clear-history">
+              Clear finished
+            </button>
+          </div>
+          <div id="history-jobs" class="library-list"></div>
+        </section>
+      </main>
+      <footer class="site-footer">
+        <div class="footer-brand">
+          <span><strong>flux.</strong> Your media. Your space.</span>
+        </div>
+        <div class="footer-credits">
+          <span class="built-by"
+            >Built by
+            <a
+              href="https://lokii.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="creator-link"
+              >lokii.dev</a
+            ></span
+          >
+          <div class="creator-handles" aria-label="Creator links">
+            <a
+              href="https://github.com/10k11/flux"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="handle-link"
+              title="GitHub"
+              aria-label="GitHub repository"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+                />
+              </svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <button
+      class="drawer-backdrop"
+      id="drawer-backdrop"
+      aria-label="Close navigation"
+      hidden
+    ></button>
+    <dialog
+      id="auth-dialog"
+      aria-labelledby="auth-title"
+      aria-describedby="auth-description"
+    >
+      <form method="dialog">
+        <button
+          class="icon-button dialog-close"
+          aria-label="Close sign-in dialog"
+        >
+          <span data-icon="x"></span>
+        </button>
+      </form>
+      <img
+        class="dialog-symbol flux-dialog-logo"
+        src="/favicon.svg"
+        alt="Flux"
+        width="48"
+        height="48"
+      />
+      <div class="eyebrow">A SPACE OF YOUR OWN</div>
+      <h2 id="auth-title">High-speed & full downloads.</h2>
+      <p id="auth-description">
+        Sign in with Google to skip slow preview re-encoding, unlock maximum
+        download speeds, and save complete media files.
+      </p>
+      <div class="auth-benefits">
+        <span
+          ><span data-icon="bolt"></span>High-speed processing (no preview
+          delays)</span
+        ><span><span data-icon="check"></span>Full-length video and audio</span
+        ><span
+          ><span data-icon="check"></span>Your own private download
+          library</span
+        >
+      </div>
+      <a href="/auth/google" class="button google-button" id="google-continue"
+        ><span class="google-icon"></span>Continue with Google</a
+      >
+      <p id="auth-config-note" class="notice" hidden>
+        Google sign-in is not configured on this server yet. Guest previews are
+        available.
+      </p>
+      <button class="text-button dialog-later" id="auth-later">Not now</button>
+      <p class="dialog-fineprint">
+        Your Google account is used for identity and library access.
+      </p>
+    </dialog>
+    <dialog id="confirm-dialog" aria-labelledby="confirm-title">
+      <h2 id="confirm-title">Clear finished downloads?</h2>
+      <p>
+        This removes finished records and their temporary files. Files saved to
+        your device are unaffected.
+      </p>
+      <div class="dialog-actions">
+        <button class="button secondary" id="cancel-clear">Keep them</button
+        ><button class="button danger" id="confirm-clear">
+          Clear finished
+        </button>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <div class="theme-flash" id="theme-flash" aria-hidden="true" hidden></div>
+  </body>
+</html>

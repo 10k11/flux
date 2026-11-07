@@ -1,0 +1,25 @@
+name: Platform / source request
+description: Ask for a new site or report a broken one
+labels: ["platform"]
+body:
+  - type: input
+    id: site
+    attributes:
+      label: Site
+      description: Name and domain
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request type
+      options:
+        - Add a new platform
+        - Existing platform is broken
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Does yt-dlp support it?
+      description: Link to the yt-dlp extractor / supported-sites entry and an example public URL. DRM-protected services will be declined.
