@@ -1,0 +1,1 @@
+Follow the rules in `AGENTS.md` at the repository root. In short: plain JavaScript ES modules with no build step, no new runtime dependencies, never weaken auth/owner checks/CSRF/the egress proxy (add denial-path tests), run `npm run check`, `npm run format:check` and `npm test` before proposing changes.

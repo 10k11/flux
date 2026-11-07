@@ -16,6 +16,8 @@ Built with plain HTML, CSS and ES modules on the front end, and Node.js, yt-dlp 
 ![Dependencies](https://img.shields.io/badge/runtime%20deps-2-blue)
 ![Accessibility](https://img.shields.io/badge/axe-WCAG%20A%2FAA%20checked-purple)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Good first issues](https://img.shields.io/github/issues/10k11/flux/good%20first%20issue?label=good%20first%20issues&color=7057ff)](https://github.com/10k11/flux/labels/good%20first%20issue)
+[![AI agents welcome](https://img.shields.io/badge/AI%20agents-welcome-orange)](AGENTS.md)
 
 [Features](#-features) ·
 [Screenshots](#-screenshots) ·
@@ -315,6 +317,10 @@ Ideas welcome via [issues](https://github.com/10k11/flux/issues). Current thinki
 ## 🤝 Contributing
 
 Contributions of every size are welcome: bug reports, docs, tests, new ideas and code. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and look for issues labelled [`good first issue`](https://github.com/10k11/flux/labels/good%20first%20issue). Everyone participating is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+**Contributors are welcome, human or AI.** Coding agents should start with [`AGENTS.md`](AGENTS.md) (code map, commands, rules) and [`llms.txt`](llms.txt). Work goes through forks and pull requests.
+
+<a href="https://github.com/10k11/flux/graphs/contributors"><img src="https://contrib.rocks/image?repo=10k11/flux" alt="Contributors" /></a>
 
 ## ⚖️ Responsible use
 

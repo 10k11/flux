@@ -34,6 +34,10 @@ For UI changes, also run the server and `npm run test:browser` and `npm run test
 - Don't add DRM circumvention, or extraction of audio from services that only license streaming (e.g. Spotify). Such PRs will be closed.
 - Never commit secrets, `.env`, binaries or downloaded media.
 
+## AI-assisted contributions
+
+AI-assisted PRs are welcome, whether from a person using an assistant or from an autonomous agent. Agents should read [AGENTS.md](AGENTS.md). Rules: you are responsible for what you submit, disclose AI assistance in the PR, run the checks above, keep PRs small, and work through a fork and PR (nobody pushes to `main` directly). Low-effort, unverified or spammy PRs are closed.
+
 ## Adding a source platform
 
 1. Add the host to the allowlist in `server.mjs` and a description in `lib/platforms.mjs`.

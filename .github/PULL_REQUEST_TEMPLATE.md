@@ -11,6 +11,7 @@
 
 ## Checklist
 
+- [ ] If AI-assisted, I disclosed it here and the output was reviewed (see AGENTS.md)
 - [ ] Focused on one concern
 - [ ] Tests added/updated (including the denial path for security-sensitive code)
 - [ ] No new runtime dependency, no secrets, no committed binaries or media

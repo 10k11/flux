@@ -1,0 +1,26 @@
+# Flux
+
+> Flux is an open-source (MIT), self-hostable media workspace: paste a link, choose MP4 or MP3, and save it offline. Node.js + yt-dlp + FFmpeg back end, plain ES-module front end with no build step and only two runtime dependencies. AI-assisted contributions are welcome.
+
+Flux supports 15 source families (YouTube, TikTok, Instagram, X, SoundCloud, Vimeo, Twitch, Reddit and more), genuine FFmpeg-validated 50% guest previews, Google sign-in (server-side OAuth with PKCE) for full downloads, an SSRF-safe egress proxy, owner-scoped job queue and history, and WCAG-checked responsive UI.
+
+## Start here
+
+- [README](https://github.com/10k11/flux/blob/main/README.md): features, screenshots, setup, configuration, architecture, API
+- [AGENTS.md](https://github.com/10k11/flux/blob/main/AGENTS.md): code map, commands, hard rules and workflow for AI coding agents
+- [CONTRIBUTING.md](https://github.com/10k11/flux/blob/main/CONTRIBUTING.md): human contributor guide
+- [SECURITY.md](https://github.com/10k11/flux/blob/main/SECURITY.md): private vulnerability reporting
+
+## Contribute
+
+- [Good first issues](https://github.com/10k11/flux/labels/good%20first%20issue)
+- [Help wanted](https://github.com/10k11/flux/labels/help%20wanted)
+- Workflow: fork, branch, PR to `main`; CI (`npm run check`, `format:check`, `test`) must pass.
+
+## Key source files
+
+- [server.mjs](https://github.com/10k11/flux/blob/main/server.mjs): routing, job queue, rate limits, file delivery
+- [lib/auth.mjs](https://github.com/10k11/flux/blob/main/lib/auth.mjs): OAuth, sessions, CSRF
+- [lib/egress.mjs](https://github.com/10k11/flux/blob/main/lib/egress.mjs): SSRF-safe proxy
+- [lib/media.mjs](https://github.com/10k11/flux/blob/main/lib/media.mjs): yt-dlp arguments and validation
+- [public/](https://github.com/10k11/flux/tree/main/public): front end
