@@ -10,6 +10,8 @@ A fast, private, self-hostable media workspace. Paste a link, pick a format, sav
 Built with plain HTML, CSS and ES modules on the front end, and Node.js, yt-dlp and FFmpeg on the back end.
 **No frontend build step. Two runtime dependencies.**
 
+> **Want to contribute?** Pick a [good first issue](https://github.com/10k11/flux/labels/good%20first%20issue), say hi in [Discussions](https://github.com/10k11/flux/discussions), and open a PR. Setup takes about a minute: `npm ci && npm run setup && npm run dev`.
+
 [![CI](https://github.com/10k11/flux/actions/workflows/ci.yml/badge.svg)](https://github.com/10k11/flux/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![Node](https://img.shields.io/badge/node-%E2%89%A5%2022.9-339933?logo=nodedotjs&logoColor=white)
