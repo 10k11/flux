@@ -282,6 +282,7 @@ docker compose up -d --build
 2. Caddy obtains and renews TLS certificates automatically.
 3. Register `https://YOUR_DOMAIN/auth/google/callback` in Google Cloud.
 4. The **PO-token provider** (`flux-pot`) stays on the internal Docker network. **Never publish its port.**
+5. The Flux container includes a Docker healthcheck for `/api/health`; use `docker compose ps` to verify that it becomes `healthy` after startup.
 
 > **Operator notes.** YouTube may still block datacentre IPs or require extra checks, and a token provider is no guarantee. Keep yt-dlp and FFmpeg updated (rebuild the image regularly), apply container filesystem quotas, and add outbound firewall rules as defence in depth. The optional cookies file is sensitive and must never be served. The shared Basic-auth password is only an outer gate and does **not** grant full-download privileges.
 
