@@ -1,0 +1,69 @@
+{
+  "name": "flux-desktop",
+  "productName": "Flux",
+  "version": "1.0.0",
+  "description": "Flux desktop app: the Flux media workspace in a window, no setup needed.",
+  "license": "MIT",
+  "author": "Lokii (https://lokii.dev)",
+  "homepage": "https://github.com/10k11/flux#readme",
+  "private": true,
+  "type": "module",
+  "main": "main.mjs",
+  "scripts": {
+    "sync": "node scripts/sync-server.mjs",
+    "start": "npm run sync && electron .",
+    "dist": "npm run sync && electron-builder --publish never"
+  },
+  "dependencies": {
+    "ffmpeg-static": "5.3.0",
+    "ffprobe-static": "3.1.0",
+    "google-auth-library": "11.2.0",
+    "ipaddr.js": "2.5.0"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "dev.lokii.flux",
+    "productName": "Flux",
+    "asar": false,
+    "files": [
+      "main.mjs",
+      "ytdlp.mjs",
+      "app-server/**",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Flux-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.video",
+      "artifactName": "Flux-${version}-${arch}.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "AudioVideo",
+      "artifactName": "Flux-${version}.${ext}"
+    }
+  },
+  "allowScripts": {
+    "ffmpeg-static@5.3.0": true,
+    "electron-winstaller": false
+  }
+}
