@@ -2,7 +2,7 @@
 
 An Electron wrapper that runs the regular Flux server on `127.0.0.1` and shows it in a window. No Node, Docker or setup needed for users. The server code is unchanged; the app only sets environment variables (`FLUX_LOCAL_MODE=1`, data in the OS app-data folder).
 
-- The **media engine** is downloaded (checksum-verified) on first launch into the app-data folder and self-updates on later launches.
+- The **media engine** is downloaded (checksum-verified) in the background on first launch into the app-data folder and self-updates on later launches. The app opens even when offline; downloads start working once the engine has arrived.
 - **FFmpeg / FFprobe** are bundled through `ffmpeg-static` and `ffprobe-static`.
 - **Local mode** (`FLUX_LOCAL_MODE=1`) treats the person running the app as signed in, so full-length downloads work without Google sign-in. It is ignored unless the server listens on `127.0.0.1`.
 
