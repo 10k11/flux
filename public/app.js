@@ -9,6 +9,7 @@ import {
   emptyState,
   downloadItem,
   isActive,
+  tickExpiry,
 } from "./components.js";
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -1100,6 +1101,18 @@ refreshSession()
 setInterval(() => {
   if (!document.hidden) refreshJobs();
 }, 2000);
+let lastExpiryRefresh = 0;
+setInterval(() => {
+  // Live countdown; once the server's deadline passes, refetch so the card flips to "Generate again".
+  if (
+    !document.hidden &&
+    tickExpiry() &&
+    Date.now() - lastExpiryRefresh > 5000
+  ) {
+    lastExpiryRefresh = Date.now();
+    refreshJobs();
+  }
+}, 1000);
 document.addEventListener("visibilitychange", async () => {
   if (!document.hidden) {
     try {

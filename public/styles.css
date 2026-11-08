@@ -2556,3 +2556,14 @@ body[data-source="x"] .download-panel {
     display: none !important;
   }
 }
+
+.expiry-note {
+  align-self: center;
+  color: var(--muted, #6b7280);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+.expiry-note.urgent {
+  color: #b45309;
+  font-weight: 600;
+}

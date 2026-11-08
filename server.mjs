@@ -351,6 +351,10 @@ function publicJob(job) {
   const { filePaths, ip, owner, ...safe } = job;
   return {
     ...safe,
+    expiresAt:
+      job.status === "completed" && job.finishedAt
+        ? job.finishedAt + RETENTION_HOURS * 3600000
+        : null,
     files: (job.status === "completed" ? filePaths || [] : []).map((f, i) => ({
       name: path.basename(f),
       size: existsSync(f) ? statSync(f).size : 0,
@@ -527,6 +531,7 @@ async function download(job) {
   } catch (e) {
     if (job.status !== "cancelled") {
       job.status = "failed";
+      job.failedStep = job.stage || "Connecting to source";
       job.error = exceeded
         ? "This download exceeded the server storage limit. Try a lower quality."
         : e.code
@@ -814,6 +819,7 @@ export function createServer() {
           googleConfigured: auth.configured,
           public: PUBLIC_OPEN,
           retentionHours: RETENTION_HOURS,
+          serverTime: Date.now(),
         });
       if (route.startsWith("/api/") && req.method !== "GET") {
         if (!equal(req.headers["x-flux-token"], session.csrf))
@@ -1050,6 +1056,7 @@ export function createServer() {
           job.error = null;
           job.progress = 0;
           delete job.finishedAt;
+          delete job.failedStep;
         }
         persist();
         pump();
