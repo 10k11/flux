@@ -1,6 +1,6 @@
 // Keeps a standalone yt-dlp in the app's data folder: downloaded and verified on
 // first launch, then self-updated in the background (sites change often).
-import { mkdir, writeFile, chmod, access } from "node:fs/promises";
+import { mkdir, writeFile, chmod, access, rename } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { spawn } from "node:child_process";
 import path from "node:path";
@@ -59,11 +59,17 @@ async function download(target) {
     createHash("sha256").update(bytes).digest("hex") !== expected.toLowerCase()
   )
     throw new Error("Checksum verification failed for yt-dlp.");
-  await writeFile(target, bytes);
-  if (process.platform !== "win32") await chmod(target, 0o755);
+  // Write to a temp name first so an interrupted download is never mistaken for a working binary.
+  const tmp = `${target}.part`;
+  await writeFile(tmp, bytes);
+  if (process.platform !== "win32") await chmod(tmp, 0o755);
+  await rename(tmp, target);
 }
 
-/** Returns the path to yt-dlp, downloading it on first run. Updates run in the background. */
+/**
+ * Returns the path to yt-dlp right away. On first run the download happens in the background,
+ * so the app still opens when offline; downloads work once yt-dlp has arrived.
+ */
 export async function ensureYtDlp(binDir) {
   await mkdir(binDir, { recursive: true });
   const target = path.join(
@@ -75,7 +81,9 @@ export async function ensureYtDlp(binDir) {
     () => false,
   );
   if (!exists) {
-    await download(target);
+    download(target).catch((error) =>
+      console.error(`Could not fetch yt-dlp yet: ${error.message}`),
+    );
     return target;
   }
   // Best effort: the standalone binary can update itself in place.
