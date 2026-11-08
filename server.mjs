@@ -349,6 +349,16 @@ function persist() {
 }
 function publicJob(job) {
   const { filePaths, ip, owner, ...safe } = job;
+  // The cleanup sweep runs once a minute; report a past-deadline file as
+  // expired immediately so a tab waking from sleep never offers a dead link.
+  if (job.status === "completed" && expired(job))
+    return {
+      ...safe,
+      status: "expired",
+      stage: "Expired",
+      expiresAt: null,
+      files: [],
+    };
   return {
     ...safe,
     expiresAt:
@@ -1035,7 +1045,8 @@ export function createServer() {
         }
         if (
           actionMatch[2] === "retry" &&
-          ["failed", "cancelled", "expired"].includes(job.status)
+          (["failed", "cancelled", "expired"].includes(job.status) ||
+            (job.status === "completed" && expired(job)))
         ) {
           if (rateLimit(clientIp(req), "jobs", JOBS_PER_HOUR, 3600000))
             throw Object.assign(
