@@ -19,12 +19,19 @@ jobs:
           node-version: 24
           cache: npm
           cache-dependency-path: desktop/package-lock.json
-      - run: npm ci
+      # GitHub's download servers sometimes answer 503/504; retry instead of failing the release.
+      - name: Install dependencies
+        shell: bash
         working-directory: desktop
-      - run: npm run dist
+        run: |
+          for i in 1 2 3 4 5; do npm ci && exit 0; echo "npm ci failed (attempt $i), retrying..."; sleep $((i * 30)); done; exit 1
+      - name: Build installer
+        shell: bash
         working-directory: desktop
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: |
+          for i in 1 2 3 4 5; do npm run dist && exit 0; echo "build failed (attempt $i), retrying..."; sleep $((i * 30)); done; exit 1
       - uses: actions/upload-artifact@v4
         with:
           name: flux-desktop-${{ matrix.os }}
