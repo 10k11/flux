@@ -32,7 +32,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: |
           for i in 1 2 3 4 5; do npm run dist && exit 0; echo "build failed (attempt $i), retrying..."; sleep $((i * 30)); done; exit 1
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: flux-desktop-${{ matrix.os }}
           path: |
