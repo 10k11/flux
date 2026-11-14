@@ -49,7 +49,7 @@ async function start() {
     server.listen(port, "127.0.0.1", resolve);
   });
 
-  win = new BrowserWindow({
+  const windowOptions = {
     width: 1240,
     height: 820,
     minWidth: 380,
@@ -61,7 +61,11 @@ async function start() {
       sandbox: true,
       nodeIntegration: false,
     },
-  });
+  };
+  if (process.platform === "linux") {
+    windowOptions.icon = path.join(here, "build", "icon.png");
+  }
+  win = new BrowserWindow(windowOptions);
   const origin = `http://localhost:${port}`;
   // Only the local Flux page may load in the window; everything else opens in the browser.
   win.webContents.setWindowOpenHandler(({ url }) => {
