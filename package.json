@@ -40,7 +40,7 @@
     "ipaddr.js": "2.5.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "4.13.0",
+    "@axe-core/playwright": "4.14.1",
     "playwright": "1.64.0",
     "prettier": "3.9.9",
     "simple-icons": "16.34.0"
